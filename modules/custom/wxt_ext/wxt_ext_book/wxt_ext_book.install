@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Install functions.
+ */
+
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\layout_builder\Entity\LayoutEntityDisplayInterface;
 use Drupal\layout_builder\Section;
@@ -12,10 +17,14 @@ function wxt_ext_book_install(): void {
   _wxt_ext_book_apply_page_book_nav_layouts();
 }
 
+/**
+ * Implements hook_update_N().
+ */
 function wxt_ext_book_update_10001(): void {
   // Set up sane layout library and display full configuration for a Basic Page book.
   wxt_ext_book_install();
 }
+
 /**
  * Apply the basic page Layout Builder + Layout Library changes.
  *
@@ -64,7 +73,7 @@ function _wxt_ext_book_patch_view_display(EntityTypeManagerInterface $etm): void
     1
   ));
 
-  // Insert after the original section (index 0). If no sections exist, insert at 0.
+  // Insert after the original section (index 0). If no sections, insert at 0.
   $insert_index = count($display->getSections()) > 0 ? 1 : 0;
 
   // Your class supports insertSection() (you verified).

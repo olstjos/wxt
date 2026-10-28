@@ -5,6 +5,7 @@
  * Contains wxt_ext_book.module.
  */
 
+use Drupal\book\BookInterface;
 use Drupal\node\NodeInterface;
 
 /**
@@ -13,7 +14,7 @@ use Drupal\node\NodeInterface;
 function wxt_ext_book_preprocess_page(&$variables) {
   $node = \Drupal::routeMatch()->getParameter('node');
 
-  if ($node instanceof NodeInterface) {
+  if ($node instanceof NodeInterface && $node instanceof BookInterface) {
     $book_array = $node->getBook();
     if (!empty($book_array)) {
       $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
@@ -53,7 +54,7 @@ function wxt_ext_book_preprocess_page(&$variables) {
 function wxt_ext_book_preprocess_book_navigation(&$variables) {
   $node = \Drupal::routeMatch()->getParameter('node');
 
-  if ($node instanceof NodeInterface) {
+  if ($node instanceof NodeInterface && $node instanceof BookInterface) {
     $book_array = $node->getBook();
     if (!empty($book_array)) {
       $config = \Drupal::config('wxt_ext_book.settings');
@@ -132,7 +133,7 @@ function _wxt_ext_book_set_variables_recursive(&$items, $active_nid) {
 function wxt_ext_book_preprocess_page_title(&$variables) {
   $node = \Drupal::routeMatch()->getParameter('node');
 
-  if ($node instanceof NodeInterface) {
+  if ($node instanceof NodeInterface && $node instanceof BookInterface) {
     $book_array = $node->getBook();
     if (!empty($book_array)) {
       $variables['is_book'] = TRUE;
